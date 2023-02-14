@@ -3,14 +3,13 @@ const app = express();
 const port = 3000;
 
 const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
 mongoose
   .connect(
     "mongodb+srv://lyj0047:abcd1234@boilerplate.cdmrajq.mongodb.net/?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
     }
   )
   .then(() => console.log("MongoDV Connected..."))
