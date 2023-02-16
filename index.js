@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const bodyParser = require("body-parser");
+
+const config = require("./config/key");
 const { User } = require("./models/User");
 
 // application/x-www-form-urlencode 를 분석해서 가져올 수 있게 함
@@ -13,13 +15,10 @@ app.use(bodyParser.json());
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(
-    "mongodb+srv://lyj0047:abcd1234@boilerplate.cdmrajq.mongodb.net/?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("MongoDV Connected..."))
   .catch((err) => console.log(err));
 
