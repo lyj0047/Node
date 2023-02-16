@@ -49,6 +49,8 @@ userSchema.pre("save", function (next) {
         next();
       });
     });
+  } else {
+    next();
   }
   // 비밀번호 암호화
 });
