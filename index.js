@@ -30,6 +30,8 @@ app.post("/register", (req, res) => {
   // 회원가입 할 때 필요한 정보들을 client에서 가져오면 그것들을 데이터베이스에 넣어준다.
 
   const user = new User(req.body);
+  // save하기 전에 비밀번호 암호화
+  
   user.save((err, userInfo) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
