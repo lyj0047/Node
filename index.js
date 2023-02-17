@@ -31,7 +31,7 @@ app.post("/register", (req, res) => {
 
   const user = new User(req.body);
   // save하기 전에 비밀번호 암호화
-  
+
   user.save((err, userInfo) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
@@ -39,6 +39,10 @@ app.post("/register", (req, res) => {
     });
   });
 });
+
+app.post('/login',(req,res)=>{
+  
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
