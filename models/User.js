@@ -55,6 +55,13 @@ userSchema.pre("save", function (next) {
   // 비밀번호 암호화
 });
 
+userSchema.methods.comparePassword = function (plainPassword, cb) {
+  // plainPassword 1234567
+  bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
+    if (err) return cb(err), cb(null, isMatch);
+  });
+};
+
 // 스키마를 감싸는 모델
 const User = mongoose.model("User", userSchema);
 
