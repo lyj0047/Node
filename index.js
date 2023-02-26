@@ -6,10 +6,10 @@ const bodyParser = require("body-parser");
 const config = require("./config/key");
 const { User } = require("./models/User");
 
-// application/x-www-form-urlencode 를 분석해서 가져올 수 있게 함
+// application/x-www-form-urlencode 타입의 데이터를 분석해서 가져올 수 있게 함
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// application/json 타입을 분석해서 가져올 수 있게  함
+// application/json 타입의 데이터를 분석해서 가져올 수 있게  함
 app.use(bodyParser.json());
 
 const mongoose = require("mongoose");
@@ -34,7 +34,7 @@ app.post("/register", (req, res) => {
 
   user.save((err, userInfo) => {
     if (err) return res.json({ success: false, err });
-    return res.status(200).json({
+    return res.status(200).json({   // 200: 성공
       success: true,
     });
   });

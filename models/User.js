@@ -38,10 +38,11 @@ const userSchema = mongoose.Schema({
   },
 });
 
+// save전에 function을 하겠다
 userSchema.pre("save", function (next) {
   var user = this;
   // 비밀번호를 바꿀때만 변경되도록 설정
-  if (user.isModified("password")) {
+  if (user.isModified("password")) {    // isModified는 mongoose 모듈에 포함되어있는 함수. 파라미터로 들어온 값이 db에 기록된 값과 비교해서 변경된 경우에는 true를, 그렇지 않은 경우는 false를 반환하는 함수
     bcrypt.genSalt(saltRounds, function (err, salt) {
       if (err) return next(err);
       bcrypt.hash(user.password, salt, function (err, hash) {
