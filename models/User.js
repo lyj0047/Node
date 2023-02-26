@@ -42,7 +42,8 @@ const userSchema = mongoose.Schema({
 userSchema.pre("save", function (next) {
   var user = this;
   // 비밀번호를 바꿀때만 변경되도록 설정
-  if (user.isModified("password")) {    // isModified는 mongoose 모듈에 포함되어있는 함수. 파라미터로 들어온 값이 db에 기록된 값과 비교해서 변경된 경우에는 true를, 그렇지 않은 경우는 false를 반환하는 함수
+  if (user.isModified("password")) {
+    // isModified는 mongoose 모듈에 포함되어있는 함수. 파라미터로 들어온 값이 db에 기록된 값과 비교해서 변경된 경우에는 true를, 그렇지 않은 경우는 false를 반환하는 함수
     bcrypt.genSalt(saltRounds, function (err, salt) {
       if (err) return next(err);
       bcrypt.hash(user.password, salt, function (err, hash) {
@@ -60,14 +61,15 @@ userSchema.pre("save", function (next) {
 userSchema.methods.comparePassword = function (plainPassword, cb) {
   // plainPassword 1234567
   bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
-    if (err) return cb(err), cb(null, isMatch);   // err==null, isMatch==true
+    if (err) return cb(err);
+    cb(null, isMatch); // err==null, isMatch==true
   });
 };
 
 userSchema.methods.generateToken = function (cb) {
   var user = this;
   // jsonwebtoken을 이용해서 토큰을 생성하기
-  var token = jwt.sign(user._id, "secretToken");
+  var token = jwt.sign(user._id.toHexString(), "secretToken");
 
   user.token = token;
   user.save(function (err, user) {
